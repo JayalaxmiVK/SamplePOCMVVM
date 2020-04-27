@@ -18,29 +18,22 @@ class CountryFactsViewModel {
             self.didFinishFetch?()
         }
     }
-    
     var imageURLs: [URL]?
-    
     var error: Error? {
         didSet { self.showAlertClosure?() }
     }
-    
     var isLoading: Bool = false {
         didSet { self.updateLoadingStatus?() }
     }
-    
     private var dataService: DataService?
-    
     // MARK: - Closures for callback, since we are not using the ViewModel to the View.
     var showAlertClosure: (() -> Void)?
     var updateLoadingStatus: (() -> Void)?
     var didFinishFetch: (() -> Void)?
-    
     // MARK: - Constructor
     init(dataService: DataService) {
         self.dataService = dataService
     }
-    
     // MARK: - Service
     func fetchCountryData() {
         self.dataService?.requestCountryData(with: kCountryDataServiceURLString, completion: { (response, error) in
@@ -50,7 +43,7 @@ class CountryFactsViewModel {
                 return
             }
             guard let responseData = response else {
-                print(ServiceError.invalidResponse(message: ErrorMessage.invalidResponse + error.debugDescription))
+                print(ServiceError.invalidResponse(message: ErrorMessage.invalidResp + error.debugDescription))
                 return
             }
             self.error = nil
@@ -60,12 +53,10 @@ class CountryFactsViewModel {
             self.countryInfo?.rows = compactRowData
         })
     }
-    
     deinit {
         dataService = nil
     }
 }
-
 extension UIImageView {
     public func imageFromServerURL(urlString: String?) {
         self.image = nil

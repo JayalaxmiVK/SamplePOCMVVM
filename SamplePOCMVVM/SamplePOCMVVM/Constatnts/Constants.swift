@@ -10,7 +10,7 @@ import Foundation
 
 // MARK: - String Constant
 
-let kCellIdentifier = "CountryFactsTableCellIdentifier"
+let kCellId = "CountryFactsTableCellIdentifier"
 let kMinimumRowHeight = 100.0
 let kEmptyString = ""
 let kIntialiserError = "init(coder:) has not been implemented"
@@ -28,6 +28,6 @@ enum ServiceError: Error {
 struct ErrorMessage {
     static let invalidURLString = "URL is not valid. May be it is empty"
     static let invalidDataConverion = "Data is not of correct form, cannot convert to string"
-    static let invalidResponse = "Data is invalid"
+    static let invalidResp = "Data is invalid"
     static let invalidJson = "JSON is invalid"
 }

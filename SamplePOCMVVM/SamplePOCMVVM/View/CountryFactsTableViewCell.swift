@@ -11,7 +11,6 @@ import SDWebImage
 import SnapKit
 
 class CountryFactsTableViewCell: UITableViewCell {
-    
     // MARK: - Properties
     var factData: Fact? {
         didSet {
@@ -21,7 +20,6 @@ class CountryFactsTableViewCell: UITableViewCell {
             self.factImage.imageFromServerURL(urlString: data.imageHref)
         }
     }
-    
     // MARK: - UI Elements
     private let titleLabel: UILabel = {
         let lbl = UILabel()
@@ -30,7 +28,6 @@ class CountryFactsTableViewCell: UITableViewCell {
         lbl.textAlignment = .left
         return lbl
     }()
-    
     private let factImage: UIImageView = {
         let imgView = UIImageView()
         imgView.contentMode = .scaleAspectFit
@@ -40,7 +37,6 @@ class CountryFactsTableViewCell: UITableViewCell {
         imgView.layer.borderColor = UIColor.lightGray.cgColor
         return imgView
     }()
-    
     private let factDescriptionLabel: UILabel = {
         let lbl = UILabel()
         lbl.textColor = .gray
@@ -49,14 +45,12 @@ class CountryFactsTableViewCell: UITableViewCell {
         lbl.numberOfLines = 0
         return lbl
     }()
-    
     // MARK: - Intialiser
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         contentView.addSubview(factImage)
         contentView.addSubview(titleLabel)
         contentView.addSubview(factDescriptionLabel)
-        
         //Adding constraints using Snapkit pod.
         factImage.snp.makeConstraints { (maker) in
             maker.width.equalTo(44)
@@ -64,13 +58,11 @@ class CountryFactsTableViewCell: UITableViewCell {
             maker.centerY.equalTo(contentView)
             maker.leading.equalTo(10)
         }
-        
         titleLabel.snp.makeConstraints { (make) in
             make.top.equalTo(contentView).offset(10)
             make.trailing.equalTo(contentView).offset(-10)
             make.leading.equalTo(factImage.snp.trailing).offset(10)
         }
-        
         factDescriptionLabel.snp.makeConstraints { (maker) in
             maker.width.equalTo(titleLabel.snp.width)
             maker.top.equalTo(titleLabel.snp.bottom).offset(5)
@@ -78,7 +70,6 @@ class CountryFactsTableViewCell: UITableViewCell {
             maker.bottom.equalTo(contentView).offset(-5)
         }
     }
-    
     required init?(coder aDecoder: NSCoder) {
         fatalError(kIntialiserError)
     }
