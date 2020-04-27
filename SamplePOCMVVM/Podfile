@@ -9,6 +9,7 @@ target 'SamplePOCMVVM' do
     pod 'Alamofire', '~> 5.1'
     pod 'SDWebImage', '~> 5.0'
     pod 'SnapKit', '~> 5.0'
+    pod 'SwiftLint'
 
   target 'SamplePOCMVVMTests' do
     inherit! :search_paths
@@ -16,7 +17,16 @@ target 'SamplePOCMVVM' do
     pod 'Alamofire', '~> 5.1'
     pod 'SDWebImage', '~> 5.0'
     pod 'SnapKit', '~> 5.0'
-
+    pod 'SwiftLint'
   end
+  
+  target 'SamplePOCMVVMUITests' do
+     inherit! :search_paths
+     # Pods for testing
+     pod 'Alamofire', '~> 5.1'
+     pod 'SDWebImage', '~> 5.0'
+     pod 'SnapKit', '~> 5.0'
+     pod 'SwiftLint'
+   end
 
 end
