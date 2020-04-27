@@ -73,7 +73,6 @@ class CountryFactsTableViewController: UITableViewController {
         //Hit the fresh service call
         self.getFactsData()
     }
-    // MARK: - Service Call
     func getFactsData() {
         self.addActivityIndicator()
         countryFactsViewModel.fetchCountryData()

@@ -9,23 +9,30 @@
 import XCTest
 
 class SamplePOCMVVMUITests: XCTestCase {
-
+    var app: XCUIApplication?
     override func setUp() {
+        app = XCUIApplication()
         continueAfterFailure = false
     }
-
     override func tearDown() {
+        app = nil
     }
-
+    func testTableCell() {
+        app?.launch()
+        let tablesQuery = app?.tables
+        let cell = tablesQuery?.cells.element(matching: .cell, identifier: "CountryFactsTableCellIdentifier")
+        XCTAssertNotNil(cell, "Cell exists.")
+    }
     func testExample() {
-        // UI tests must launch the application that they test.
-        let app = XCUIApplication()
-            app.launch()
+        app?.launch()
+        let tablesQuery = app?.tables
+        let cell = tablesQuery?.staticTexts["Flag"]
+        let exists = NSPredicate(format: "exists == 1")
+        expectation(for: exists, evaluatedWith: cell, handler: nil)
+        waitForExpectations(timeout: 10, handler: nil)
     }
-
     func testLaunchPerformance() {
         if #available(macOS 10.15, iOS 13.0, tvOS 13.0, *) {
-            // This measures how long it takes to launch your application.
             measure(metrics: [XCTOSSignpostMetric.applicationLaunch]) {
                 XCUIApplication().launch()
             }
