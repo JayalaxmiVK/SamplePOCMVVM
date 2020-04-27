@@ -9,12 +9,16 @@
 import Foundation
 import UIKit
 import SDWebImage
-
+protocol completionDelegate: class {
+    func updateUI()
+}
 class CountryFactsViewModel {
+    weak var delegate: completionDelegate?
     var countryInfo: CountryInfo? {
         didSet {
             guard let cInfo = countryInfo else { return }
             print(cInfo)
+            delegate?.updateUI()
             self.didFinishFetch?()
         }
     }

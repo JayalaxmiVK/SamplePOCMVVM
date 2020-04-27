@@ -15,6 +15,7 @@ class CountryFactsTableViewController: UITableViewController {
     // MARK: - View LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        countryFactsViewModel.delegate = self
         setupTableView()
         setUpActivityIndicator()
         setUpRefreshControl()
@@ -65,7 +66,6 @@ class CountryFactsTableViewController: UITableViewController {
     }
     func removeActivityIndicator() {
         activityIndicator.stopAnimating()
-        refreshControl?.endRefreshing()
         activityIndicator.removeFromSuperview()
     }
     // MARK: - Action Methods
@@ -76,16 +76,14 @@ class CountryFactsTableViewController: UITableViewController {
     func getFactsData() {
         self.addActivityIndicator()
         countryFactsViewModel.fetchCountryData()
-        countryFactsViewModel.updateLoadingStatus = {
-            _ = self.countryFactsViewModel.isLoading ? self.addActivityIndicator() : self.removeActivityIndicator()
-            self.setupNavigationTitle()
-        }
-        countryFactsViewModel.showAlertClosure = {
-            if let error = self.countryFactsViewModel.error {
-                print(error.localizedDescription)
-            }
-        }
+    }
+}
+extension CountryFactsTableViewController: completionDelegate {
+    func updateUI() {
         countryFactsViewModel.didFinishFetch = {
+            self.removeActivityIndicator()
+            self.refreshControl?.endRefreshing()
+            self.setupNavigationTitle()
             self.tableView.reloadData()
         }
     }
