@@ -11,6 +11,7 @@ import UIKit
 import SDWebImage
 protocol completionDelegate: class {
     func updateUI()
+    func showError()
 }
 class CountryFactsViewModel {
     weak var delegate: completionDelegate?
@@ -19,21 +20,15 @@ class CountryFactsViewModel {
             guard let cInfo = countryInfo else { return }
             print(cInfo)
             delegate?.updateUI()
-            self.didFinishFetch?()
         }
     }
     var imageURLs: [URL]?
     var error: Error? {
-        didSet { self.showAlertClosure?() }
-    }
-    var isLoading: Bool = false {
-        didSet { self.updateLoadingStatus?() }
+        didSet {
+            delegate?.showError()
+        }
     }
     private var dataService: DataService?
-    // MARK: - Closures for callback, since we are not using the ViewModel to the View.
-    var showAlertClosure: (() -> Void)?
-    var updateLoadingStatus: (() -> Void)?
-    var didFinishFetch: (() -> Void)?
     // MARK: - Constructor
     init(dataService: DataService) {
         self.dataService = dataService
@@ -43,7 +38,6 @@ class CountryFactsViewModel {
         self.dataService?.requestCountryData(with: kCountryDataServiceURLString, completion: { (response, error) in
             if let error = error {
                 self.error = error
-                self.isLoading = false
                 return
             }
             guard let responseData = response else {
@@ -51,7 +45,6 @@ class CountryFactsViewModel {
                 return
             }
             self.error = nil
-            self.isLoading = false
             let compactRowData = responseData.rows.filter {$0.title != nil}
             self.countryInfo = response
             self.countryInfo?.rows = compactRowData

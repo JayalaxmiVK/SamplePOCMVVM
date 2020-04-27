@@ -80,11 +80,15 @@ class CountryFactsTableViewController: UITableViewController {
 }
 extension CountryFactsTableViewController: completionDelegate {
     func updateUI() {
-        countryFactsViewModel.didFinishFetch = {
-            self.removeActivityIndicator()
-            self.refreshControl?.endRefreshing()
-            self.setupNavigationTitle()
-            self.tableView.reloadData()
+        self.removeActivityIndicator()
+        self.refreshControl?.endRefreshing()
+        self.setupNavigationTitle()
+        self.tableView.reloadData()
+    }
+    func showError() {
+        if let error = self.countryFactsViewModel.error {
+            print(error.localizedDescription)
         }
     }
+
 }
